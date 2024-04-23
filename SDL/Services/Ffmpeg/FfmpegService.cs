@@ -13,10 +13,7 @@ namespace SDL.Services.Ffmpeg
         private static FfmpegService _instance;
         public static FfmpegService Instance => (_instance ??= new FfmpegService());
 
-        private FfmpegService()
-        {
-            
-        }
+        private FfmpegService() { }
 
         public async Task<bool> StreamConvert(string url, string fileName)
         {
