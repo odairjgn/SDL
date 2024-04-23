@@ -6,12 +6,7 @@
         {
             if (!request.Headers.Contains("User-Agent"))
             {
-                request.Headers.Add(
-                    "User-Agent",
-                    //The generated user-agent will not work on mobile devices in some cases.
-                    //Http.ChromeUserAgent()
-                    "Other"
-                );
+                request.Headers.Add("User-Agent", "Other");
             }
 
             using var response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
