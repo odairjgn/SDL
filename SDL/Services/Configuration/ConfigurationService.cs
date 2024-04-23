@@ -16,6 +16,7 @@ namespace SDL.Services.Configuration
             catch
             {
                 Reset();
+                Load();
             }
         }
 

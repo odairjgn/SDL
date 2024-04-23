@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace SDL.Services.Utils
+﻿namespace SDL.Services.Utils
 {
     public static class FormsUtils
     {
