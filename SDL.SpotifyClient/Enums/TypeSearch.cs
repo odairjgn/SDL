@@ -1,4 +1,6 @@
-﻿namespace SDL.SpotifyClient.Enums
+﻿using System.ComponentModel;
+
+namespace SDL.SpotifyClient.Enums
 {
     public enum TypeSearch
     {
@@ -6,6 +8,5 @@
         Artist = 2,
         Playlist = 3,
         Track = 4,
-        All = 9
     }
 }

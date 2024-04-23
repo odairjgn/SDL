@@ -1,13 +1,11 @@
-﻿namespace SDL.SpotifyClient.Interfaces
+﻿using SDL.SpotifyClient.Enums;
+
+namespace SDL.SpotifyClient.Interfaces
 {
     public interface ISearchService
     {
-        Task<List<ISearchBase>> GetPlaylistsAsync(string search, CancellationToken cancellationToken = default);
+        Task<List<ISearchBase>> GetFilteredRecordsAsync(string query, CancellationToken cancellationToken = default, params TypeSearch[] types);
 
-        Task<List<ISearchBase>> GetAlbumsAsync(string search, CancellationToken cancellationToken = default);
-
-        Task<List<ISearchBase>> GetArtistsAsync(string search, CancellationToken cancellationToken = default);
-
-        Task<List<ISearchBase>> GetTracksAsync(string search, CancellationToken cancellationToken = default);
+        Task<List<ISearchBase>> GetAllTypesAsync(string query, CancellationToken cancellationToken = default);
     }
 }

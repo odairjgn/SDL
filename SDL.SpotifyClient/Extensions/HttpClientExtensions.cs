@@ -14,10 +14,10 @@
             if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 return string.Empty;
 
-            var teste = await response.Content.ReadAsStringAsync();
-
             if (!response.IsSuccessStatusCode)
-                throw new Exception($"Error: {(int)response.StatusCode}, Request: {request}");
+            {
+                throw new Exception($"Error: {(int)response.StatusCode}, Request: {request}, Response: {await response.Content.ReadAsStringAsync()}");
+            }
 
             return await response.Content.ReadAsStringAsync();
         }

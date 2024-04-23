@@ -1,5 +1,6 @@
 ﻿using SDL.Forms.UserControls;
 using SDL.Services.Log;
+using SDL.SpotifyClient.Enums;
 using SDL.SpotifyClient.Interfaces;
 using SDL.SpotifyClient.Services;
 
@@ -68,28 +69,27 @@ namespace SDL.Forms.Dialogs
         {
             if (rbAll.Checked)
             {
-                // TODO: Deve verificar pois o comportamento padrão da lib era procurar tracks aqui
-                return await _spotifyServices.Search.GetTracksAsync(txtSearch.Text);
+                return await _spotifyServices.Search.GetAllTypesAsync(txtSearch.Text);
             }
 
             if (rbTracks.Checked)
             {
-                return await _spotifyServices.Search.GetTracksAsync(txtSearch.Text);
+                return await _spotifyServices.Search.GetFilteredRecordsAsync(txtSearch.Text, types: TypeSearch.Track);
             }
 
             if (rbPlayList.Checked)
             {
-                return await _spotifyServices.Search.GetPlaylistsAsync(txtSearch.Text);
+                return await _spotifyServices.Search.GetFilteredRecordsAsync(txtSearch.Text, types: TypeSearch.Playlist);
             }
 
             if (rbArtist.Checked)
             {
-                return await _spotifyServices.Search.GetArtistsAsync(txtSearch.Text);
+                return await _spotifyServices.Search.GetFilteredRecordsAsync(txtSearch.Text, types: TypeSearch.Artist);
             }
 
             if (rbAlbum.Checked)
             {
-                return await _spotifyServices.Search.GetAlbumsAsync(txtSearch.Text);
+                return await _spotifyServices.Search.GetFilteredRecordsAsync(txtSearch.Text, types: TypeSearch.Album);
             }
 
             return [];
