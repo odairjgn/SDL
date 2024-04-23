@@ -19,7 +19,7 @@ namespace SDL.Services.Tasks
             Remove?.Invoke(this, EventArgs.Empty);
         }
 
-        private DownloadTaskStatus _status;
+        private DownloadTaskStatus _status = DownloadTaskStatus.Ready;
         public DownloadTaskStatus Status
         {
             get
@@ -34,5 +34,7 @@ namespace SDL.Services.Tasks
         }
 
         public abstract Task Download();
+
+        public abstract override string ToString();
     }
 }

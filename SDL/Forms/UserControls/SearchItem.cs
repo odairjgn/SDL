@@ -230,5 +230,10 @@ namespace SDL.Forms.UserControls
                 detForm.ShowDialog();
             }
         }
+
+        private void btDownload_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

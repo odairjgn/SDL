@@ -83,6 +83,7 @@
             btDownload.Size = new Size(40, 36);
             btDownload.TabIndex = 3;
             btDownload.UseVisualStyleBackColor = true;
+            btDownload.Click += btDownload_Click;
             // 
             // btPreview
             // 
