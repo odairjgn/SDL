@@ -37,6 +37,7 @@
             lbInfo2 = new Label();
             lbType = new Label();
             lkYoutube = new LinkLabel();
+            lkDetails = new LinkLabel();
             ((System.ComponentModel.ISupportInitialize)pbCover).BeginInit();
             SuspendLayout();
             // 
@@ -82,6 +83,7 @@
             btDownload.Size = new Size(40, 36);
             btDownload.TabIndex = 3;
             btDownload.UseVisualStyleBackColor = true;
+            btDownload.Click += btDownload_Click;
             // 
             // btPreview
             // 
@@ -144,10 +146,23 @@
             lkYoutube.Text = "Open on Youtube";
             lkYoutube.LinkClicked += lkYoutube_LinkClicked;
             // 
+            // lkDetails
+            // 
+            lkDetails.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lkDetails.AutoSize = true;
+            lkDetails.Location = new Point(432, 65);
+            lkDetails.Name = "lkDetails";
+            lkDetails.Size = new Size(42, 15);
+            lkDetails.TabIndex = 10;
+            lkDetails.TabStop = true;
+            lkDetails.Text = "Details";
+            lkDetails.LinkClicked += lkDetails_LinkClicked;
+            // 
             // SearchItem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(lkDetails);
             Controls.Add(lkYoutube);
             Controls.Add(lbType);
             Controls.Add(lbInfo2);
@@ -175,5 +190,6 @@
         private Label lbInfo2;
         private Label lbType;
         private LinkLabel lkYoutube;
+        private LinkLabel lkDetails;
     }
 }

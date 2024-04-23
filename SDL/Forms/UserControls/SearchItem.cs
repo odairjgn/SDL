@@ -11,11 +11,12 @@ using SDL.SpotifyClient.Models.Tracks;
 using SDL.SpotifyClient.Services;
 using System.Data;
 using System.Diagnostics;
+using System.Security.Policy;
 
 namespace SDL.Forms.UserControls
 {
     public partial class SearchItem : UserControl
-    { 
+    {
         private Form? _form;
         private ISearchBase _result;
 
@@ -72,6 +73,7 @@ namespace SDL.Forms.UserControls
                     lbType.Text = "Track";
                     lbType.ForeColor = Color.White;
                     lbType.BackColor = Color.Green;
+                    lkDetails.Visible = false;
                     break;
 
                 case Artist artist:
@@ -88,7 +90,7 @@ namespace SDL.Forms.UserControls
                     lkYoutube.Visible = false;
                     btPreview.Visible = false;
 
-                    lkOpenOnSpotify.Text = "Details";
+                    lkDetails.Visible = true;
                     break;
 
                 case Album album:
@@ -103,7 +105,7 @@ namespace SDL.Forms.UserControls
                     lbType.BackColor = Color.Red;
                     lkYoutube.Visible = false;
                     btPreview.Visible = false;
-                    lkOpenOnSpotify.Text = "Details";
+                    lkDetails.Visible = true;
                     break;
 
                 case Playlist playlist:
@@ -117,7 +119,7 @@ namespace SDL.Forms.UserControls
                     lbType.BackColor = Color.DeepPink;
                     lkYoutube.Visible = false;
                     btPreview.Visible = false;
-                    lkOpenOnSpotify.Text = "Details";
+                    lkDetails.Visible = true;
                     break;
             }
         }
@@ -137,54 +139,22 @@ namespace SDL.Forms.UserControls
 
         private async void lkOpenOnSpotify_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (_result != null)
+            if (_result?.Url != null)
             {
-                if (_result is Track)
+                var url = _result switch
                 {
-                    Process.Start(new ProcessStartInfo(_result.Url) { UseShellExecute = true });
-                }
-                else
-                {
-                    var spot = new SpotifyServices();
+                    Artist _ => $"https://open.spotify.com/artist/{_result.Url}",
+                    Album _ => $"https://open.spotify.com/album/{_result.Url}",
+                    Playlist _ => $"https://open.spotify.com/playlist/{_result.Url}",
+                    _ => _result.Url
+                };
 
-                    var tracks = new List<Track>();
-
-                    switch (_result)
-                    {
-                        case Album album:
-                            tracks = await spot.Album.GetAllTracksAsync(album.Id);
-                            break;
-
-                        case Playlist playlist:
-                            tracks = await spot.Playlist.GetAllTracksAsync(playlist.Id);
-                            break;
-
-                        case Artist artist:
-                            
-                            var albuns = await spot.Artist.GetAllAlbumsAsync(artist.Id);
-                            foreach (var a in albuns)
-                            {
-                                var tr = await spot.Album.GetAllTracksAsync(a.Id);
-
-                                foreach(var t in tr)
-                                {
-                                    if (tracks.Any(x => x.Id == t.Id))
-                                        continue;
-
-                                    tracks.Add(t);
-                                }
-                            }
-                            break;
-                    }
-
-                    var detForm = new DetailForm(tracks);
-                    detForm.ShowDialog();
-                }
+                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
             }
         }
 
         private async void lkYoutube_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {            
+        {
             try
             {
                 var musica = _result as Track;
@@ -218,6 +188,52 @@ namespace SDL.Forms.UserControls
         private void Player_Stoped(object? sender, EventArgs e)
         {
             Playing = false;
+        }
+
+        private async void lkDetails_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (_result == null)
+            {
+                var spot = new SpotifyServices();
+
+                var tracks = new List<Track>();
+
+                switch (_result)
+                {
+                    case Album album:
+                        tracks = await spot.Album.GetAllTracksAsync(album.Id);
+                        break;
+
+                    case Playlist playlist:
+                        tracks = await spot.Playlist.GetAllTracksAsync(playlist.Id);
+                        break;
+
+                    case Artist artist:
+
+                        var albuns = await spot.Artist.GetAllAlbumsAsync(artist.Id);
+                        foreach (var a in albuns)
+                        {
+                            var tr = await spot.Album.GetAllTracksAsync(a.Id);
+
+                            foreach (var t in tr)
+                            {
+                                if (tracks.Any(x => x.Id == t.Id))
+                                    continue;
+
+                                tracks.Add(t);
+                            }
+                        }
+                        break;
+                }
+
+                var detForm = new DetailForm(tracks);
+                detForm.ShowDialog();
+            }
+        }
+
+        private void btDownload_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
