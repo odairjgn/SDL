@@ -139,7 +139,7 @@ namespace SDL.Forms.UserControls
 
         private async void lkOpenOnSpotify_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (_result != null)
+            if (_result?.Url != null)
             {
                 var url = _result switch
                 {
