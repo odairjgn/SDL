@@ -1,6 +1,6 @@
 ﻿namespace SDL.SpotifyClient.Utils
 {
-    internal class Http
+    public class Http
     {
         private static readonly Lazy<HttpClient> _httpClientLazy = new Lazy<HttpClient>(() => new HttpClient());
 
