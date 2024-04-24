@@ -31,15 +31,8 @@ namespace SDL.SpotifyClient.Services
 
         public async Task<string?> GetDownloadUrlAsync(string trackId, CancellationToken cancellationToken = default)
         {
-            var url = "";
+            var url = await GetSpotifyDownloaderUrlAsync(trackId, cancellationToken);
 
-            try
-            {
-                url = await GetSpotifyDownloaderUrlAsync(trackId, cancellationToken);
-            }
-            catch { }
-
-            
             if (string.IsNullOrEmpty(url))
                 url = await GetSpotifymateUrlAsync(trackId, cancellationToken);
 
@@ -48,19 +41,26 @@ namespace SDL.SpotifyClient.Services
 
         public async Task<string?> GetSpotifyDownloaderUrlAsync(string trackId, CancellationToken cancellationToken = default)
         {
-            var formContent = new FormUrlEncodedContent(
-            [
-                new("link", $"https://open.spotify.com/track/{trackId}")
-            ]);
+            try
+            {
+                var formContent = new FormUrlEncodedContent(
+                [
+                    new("link", $"https://open.spotify.com/track/{trackId}")
+                ]);
 
-            var response = await _httpClient.PostAsync(
-                "https://api.spotify-downloader.com/",
-                null,
-                formContent,
-                cancellationToken
-            );
+                var response = await _httpClient.PostAsync(
+                    "https://api.spotify-downloader.com/",
+                    null,
+                    formContent,
+                    cancellationToken
+                );
 
-            return JsonNode.Parse(response)!["audio"]?["url"]?.ToString();
+                return JsonNode.Parse(response)!["audio"]?["url"]?.ToString();
+            }
+            catch
+            {
+                return default;
+            }            
         }
 
         public async Task<string?> GetSpotifymateUrlAsync(string trackId, CancellationToken cancellationToken = default)
