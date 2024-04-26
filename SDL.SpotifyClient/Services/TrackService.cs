@@ -19,7 +19,7 @@ namespace SDL.SpotifyClient.Services
             _client = new SpotifyAuthenticatedClient(httpClient);
         }
 
-        public async Task<Track> GetAsync(string trackId, CancellationToken cancellationToken = default)
+        public async Task<Track> GetAsync(TrackId trackId, CancellationToken cancellationToken = default)
         {
             var response = await _client.GetAsync(
                 $"https://api.spotify.com/v1/tracks/{trackId}",
@@ -29,7 +29,7 @@ namespace SDL.SpotifyClient.Services
             return JsonSerializer.Deserialize<Track>(response, JsonDefault.Options)!;
         }
 
-        public async Task<string?> GetDownloadUrlAsync(string trackId, CancellationToken cancellationToken = default)
+        public async Task<string?> GetDownloadUrlAsync(TrackId trackId, CancellationToken cancellationToken = default)
         {
             var url = await GetSpotifyDownloaderUrlAsync(trackId, cancellationToken);
 
@@ -39,7 +39,7 @@ namespace SDL.SpotifyClient.Services
             return url;
         }
 
-        public async Task<string?> GetSpotifyDownloaderUrlAsync(string trackId, CancellationToken cancellationToken = default)
+        public async Task<string?> GetSpotifyDownloaderUrlAsync(TrackId trackId, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace SDL.SpotifyClient.Services
             }            
         }
 
-        public async Task<string?> GetSpotifymateUrlAsync(string trackId, CancellationToken cancellationToken = default)
+        public async Task<string?> GetSpotifymateUrlAsync(TrackId trackId, CancellationToken cancellationToken = default)
         {
             var formContent = new FormUrlEncodedContent(
             [
@@ -88,7 +88,7 @@ namespace SDL.SpotifyClient.Services
                 .SelectSingleNode(".//a")?.Attributes["href"]?.Value;
         }
 
-        public async Task<string?> GetYoutubeIdAsync(string trackId, CancellationToken cancellationToken = default)
+        public async Task<string?> GetYoutubeIdAsync(TrackId trackId, CancellationToken cancellationToken = default)
         {
             var response = await _httpClient.ExecuteAsync(
                 $"https://api.spotifydown.com/getId/{trackId}",

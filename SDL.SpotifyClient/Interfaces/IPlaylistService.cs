@@ -5,14 +5,14 @@ namespace SDL.SpotifyClient.Interfaces
 {
     public interface IPlaylistService
     {
-        Task<Playlist> GetAsync(string playlistId, CancellationToken cancellationToken = default);
+        Task<Playlist> GetAsync(PlaylistId playlistId, CancellationToken cancellationToken = default);
 
-        Task<List<Item>> GetItemsAsync(string playlistId, int offset = 0, int limit = 50, CancellationToken cancellationToken = default);
+        Task<List<Item>> GetItemsAsync(PlaylistId playlistId, int offset = 0, int limit = 50, CancellationToken cancellationToken = default);
 
-        Task<List<Item>> GetAllItemsAsync(string playlistId, CancellationToken cancellationToken = default);
+        Task<List<Item>> GetAllItemsAsync(PlaylistId playlistId, CancellationToken cancellationToken = default);
 
-        Task<List<Track>> GetTracksAsync(string playlistId, int offset = 0, int limit = 50, CancellationToken cancellationToken = default);
+        Task<List<Track>> GetTracksAsync(PlaylistId playlistId, int offset = 0, int limit = 50, CancellationToken cancellationToken = default);
 
-        Task<List<Track>> GetAllTracksAsync(string playlistId, CancellationToken cancellationToken = default);
+        Task<List<Track>> GetAllTracksAsync(PlaylistId playlistId, CancellationToken cancellationToken = default);
     }
 }

@@ -192,7 +192,7 @@ namespace SDL.Forms.UserControls
 
         private async void lkDetails_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (_result == null)
+            if (_result != null)
             {
                 var spot = new SpotifyServices();
 

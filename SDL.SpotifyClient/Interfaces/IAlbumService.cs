@@ -5,10 +5,10 @@ namespace SDL.SpotifyClient.Interfaces
 {
     public interface IAlbumService
     {
-        Task<Album> GetAsync(string albumId, CancellationToken cancellationToken = default);
+        Task<Album> GetAsync(AlbumId albumId, CancellationToken cancellationToken = default);
 
-        Task<List<Track>> GetTracksAsync(string albumId, int offSet = 0, int limit = 50, CancellationToken cancellationToken = default);
+        Task<List<Track>> GetTracksAsync(AlbumId albumId, int offSet = 0, int limit = 50, CancellationToken cancellationToken = default);
 
-        Task<List<Track>> GetAllTracksAsync(string albumId, CancellationToken cancellationToken = default);
+        Task<List<Track>> GetAllTracksAsync(AlbumId albumId, CancellationToken cancellationToken = default);
     }
 }

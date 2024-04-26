@@ -16,7 +16,7 @@ namespace SDL.SpotifyClient.Services
             _client = new SpotifyAuthenticatedClient(httpClient);
         }
 
-        public async Task<List<Track>> GetAllTracksAsync(string albumId, CancellationToken cancellationToken = default)
+        public async Task<List<Track>> GetAllTracksAsync(AlbumId albumId, CancellationToken cancellationToken = default)
         {
             var tracks = new List<Track>();
 
@@ -42,7 +42,7 @@ namespace SDL.SpotifyClient.Services
             return tracks;
         }
 
-        public async Task<Album> GetAsync(string albumId, CancellationToken cancellationToken = default)
+        public async Task<Album> GetAsync(AlbumId albumId, CancellationToken cancellationToken = default)
         {
             var response = await _client.GetAsync(
                 $"https://api.spotify.com/v1/albums/{albumId}",
@@ -62,7 +62,7 @@ namespace SDL.SpotifyClient.Services
             return album;
         }
 
-        public async Task<List<Track>> GetTracksAsync(string albumId, int offSet = 0, int limit = 50, CancellationToken cancellationToken = default)
+        public async Task<List<Track>> GetTracksAsync(AlbumId albumId, int offSet = 0, int limit = 50, CancellationToken cancellationToken = default)
         {
             var response = await _client.GetAsync(
                 $"https://api.spotify.com/v1/albums/{albumId}/tracks?offset={offSet}&limit={limit}",

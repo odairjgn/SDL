@@ -19,6 +19,12 @@ namespace SDL.Forms.Dialogs
                 var item = new DetailItem(d);
                 flpItens.Controls.Add(item);
             }
+
+            if (det.Count == 0)
+            {
+                var noItem = new Label() { Text = "(Empty)" };
+                flpItens.Controls.Add(noItem);
+            }
         }
 
     }

@@ -16,7 +16,7 @@ namespace SDL.SpotifyClient.Services
             _client = new SpotifyAuthenticatedClient(httpClient);
         }
 
-        public async Task<List<Album>> GetAlbumsAsync(string artistId, int offset = 0, int limit = 50, CancellationToken cancellationToken = default)
+        public async Task<List<Album>> GetAlbumsAsync(ArtistId artistId, int offset = 0, int limit = 50, CancellationToken cancellationToken = default)
         {
             var response = await _client.GetAsync(
                 $"https://api.spotify.com/v1/artists/{artistId}/albums?offset={offset}&limit={limit}",
@@ -28,7 +28,7 @@ namespace SDL.SpotifyClient.Services
             return JsonSerializer.Deserialize<List<Album>>(artistAlbums, JsonDefault.Options);
         }
 
-        public async Task<List<Album>> GetAllAlbumsAsync(string artistId, CancellationToken cancellationToken = default)
+        public async Task<List<Album>> GetAllAlbumsAsync(ArtistId artistId, CancellationToken cancellationToken = default)
         {
             var artistAlbums = new List<Album>();
 
@@ -54,7 +54,7 @@ namespace SDL.SpotifyClient.Services
             return artistAlbums;
         }
 
-        public async Task<Artist> GetAsync(string artistId, CancellationToken cancellationToken = default)
+        public async Task<Artist> GetAsync(ArtistId artistId, CancellationToken cancellationToken = default)
         {
             var response = await _client.GetAsync(
                 $"https://api.spotify.com/v1/artists/{artistId}",

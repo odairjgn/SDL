@@ -17,7 +17,7 @@ namespace SDL.SpotifyClient.Services
             _client = new SpotifyAuthenticatedClient(httpClient);
         }
 
-        public async Task<List<Item>> GetAllItemsAsync(string playlistId, CancellationToken cancellationToken = default)
+        public async Task<List<Item>> GetAllItemsAsync(PlaylistId playlistId, CancellationToken cancellationToken = default)
         {
             var playlistItems = new List<Item>();
 
@@ -43,13 +43,13 @@ namespace SDL.SpotifyClient.Services
             return playlistItems;
         }
 
-        public async Task<List<Track>> GetAllTracksAsync(string playlistId, CancellationToken cancellationToken = default)
+        public async Task<List<Track>> GetAllTracksAsync(PlaylistId playlistId, CancellationToken cancellationToken = default)
         {
             return (await GetAllItemsAsync(playlistId, cancellationToken)).ConvertAll(x => x.Track);
 
         }
 
-        public async Task<Playlist> GetAsync(string playlistId, CancellationToken cancellationToken = default)
+        public async Task<Playlist> GetAsync(PlaylistId playlistId, CancellationToken cancellationToken = default)
         {
             var response = await _client.GetAsync(
                 $"https://api.spotify.com/v1/playlists/{playlistId}",
@@ -65,7 +65,7 @@ namespace SDL.SpotifyClient.Services
             return palylist;
         }
 
-        public async Task<List<Item>> GetItemsAsync(string playlistId, int offset = 0, int limit = 50, CancellationToken cancellationToken = default)
+        public async Task<List<Item>> GetItemsAsync(PlaylistId playlistId, int offset = 0, int limit = 50, CancellationToken cancellationToken = default)
         {
             var response = await _client.GetAsync(
                 $"https://api.spotify.com/v1/playlists/{playlistId}/tracks?offset={offset}&limit={limit}",
@@ -99,7 +99,7 @@ namespace SDL.SpotifyClient.Services
             return list;
         }
 
-        public async Task<List<Track>> GetTracksAsync(string playlistId, int offset = 0, int limit = 50, CancellationToken cancellationToken = default)
+        public async Task<List<Track>> GetTracksAsync(PlaylistId playlistId, int offset = 0, int limit = 50, CancellationToken cancellationToken = default)
         {
             return (await GetItemsAsync(playlistId, offset, limit, cancellationToken)).ConvertAll(x => x.Track);
         }
