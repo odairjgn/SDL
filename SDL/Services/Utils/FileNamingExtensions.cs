@@ -1,10 +1,10 @@
 ﻿namespace SDL.Services.Utils
 {
-    public static class FileNaming
+    public static class FileNamingExtensions
     {
         const string ToRemove = "\">|<?*:/";
 
-        public static string ToSafeFilePath(string path)
+        public static string ToSafeFilePath(this string path)
         {
             foreach (var c in ToRemove)
             {

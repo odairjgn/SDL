@@ -6,6 +6,8 @@ namespace SDL.Services.Tasks
 {
     public abstract class DownloadTask : INotifyPropertyChanged
     {
+        public Guid Id { get; set; }
+
         public event PropertyChangedEventHandler? PropertyChanged;
         public event EventHandler Remove;
 

@@ -2,6 +2,7 @@
 using SDL.Forms.Dialogs;
 using SDL.Services.Log;
 using SDL.Services.Player;
+using SDL.Services.Tasks;
 using SDL.Services.Utils;
 using SDL.SpotifyClient.Interfaces;
 using SDL.SpotifyClient.Models.Album;
@@ -233,7 +234,7 @@ namespace SDL.Forms.UserControls
 
         private void btDownload_Click(object sender, EventArgs e)
         {
-
+            DownloadList.Tasks.Add(new TrackDownloadTask(_result as Track));
         }
     }
 }

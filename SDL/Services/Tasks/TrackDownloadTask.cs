@@ -26,7 +26,7 @@ namespace SDL.Services.Tasks
 
         private FileInfo GenerateName()
         {
-            throw new NotImplementedException();
+            return new FileInfo("C:/didi.txt");
         }
 
         public override Task Download()
