@@ -48,6 +48,7 @@
             Controls.Add(flpItens);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "DetailForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "DetailForm";
             ResumeLayout(false);
         }

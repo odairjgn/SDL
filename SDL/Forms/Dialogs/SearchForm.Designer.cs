@@ -156,6 +156,7 @@
             Controls.Add(txtSearch);
             Controls.Add(label1);
             Name = "SearchForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "SearchForm";
             pnOptions.ResumeLayout(false);
             pnOptions.PerformLayout();

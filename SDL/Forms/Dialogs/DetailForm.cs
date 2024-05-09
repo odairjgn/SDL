@@ -5,27 +5,46 @@ namespace SDL.Forms.Dialogs
 {
     public partial class DetailForm : Form
     {
-        public DetailForm()
+        private readonly Task<List<Track>> _taskListTracks;
+
+        public DetailForm(Task<List<Track>> taskListTracks)
         {
             InitializeComponent();
+            _taskListTracks = taskListTracks;
         }
 
-        public DetailForm(List<Track> det)
+        protected override void OnShown(EventArgs e)
         {
-            InitializeComponent();
+            base.OnShown(e);
+            LoadItemsUi(_taskListTracks);
+        }
 
-            foreach(var d in det)
+        private async void LoadItemsUi(Task<List<Track>> itemsTask)
+        {
+            Invoke(delegate
             {
-                var item = new DetailItem(d);
-                flpItens.Controls.Add(item);
-            }
-
-            if (det.Count == 0)
-            {
-                var noItem = new Label() { Text = "(Empty)" };
+                var noItem = new Label() { Text = "Loading..." };
                 flpItens.Controls.Add(noItem);
-            }
-        }
+            });
 
+            var results = await itemsTask;
+
+            Invoke(flpItens.Controls.Clear);
+
+            Invoke(delegate
+            {
+                foreach (var d in results)
+                {
+                    var item = new DetailItem(d);
+                    flpItens.Controls.Add(item);
+                }
+
+                if (results.Count == 0)
+                {
+                    var noItem = new Label() { Text = "(Empty)" };
+                    flpItens.Controls.Add(noItem);
+                }
+            });            
+        }
     }
 }

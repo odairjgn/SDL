@@ -195,46 +195,56 @@ namespace SDL.Forms.UserControls
         {
             if (_result != null)
             {
-                var spot = new SpotifyServices();
+                var spot = new SpotifyServices();                
 
-                var tracks = new List<Track>();
+                Task<List<Track>> taskDetails = Task.FromResult(new List<Track>());
 
                 switch (_result)
                 {
                     case Album album:
-                        tracks = await spot.Album.GetAllTracksAsync(album.Id);
+                        taskDetails = spot.Album.GetAllTracksAsync(album.Id);
                         break;
 
                     case Playlist playlist:
-                        tracks = await spot.Playlist.GetAllTracksAsync(playlist.Id);
+                        taskDetails = spot.Playlist.GetAllTracksAsync(playlist.Id);
                         break;
 
                     case Artist artist:
 
-                        var albuns = await spot.Artist.GetAllAlbumsAsync(artist.Id);
-                        foreach (var a in albuns)
-                        {
-                            var tr = await spot.Album.GetAllTracksAsync(a.Id);
-
-                            foreach (var t in tr)
-                            {
-                                if (tracks.Any(x => x.Id == t.Id))
-                                    continue;
-
-                                tracks.Add(t);
-                            }
-                        }
+                        taskDetails = GetTaskFindAllTracksArtist(spot, artist.Id);                        
                         break;
                 }
 
-                var detForm = new DetailForm(tracks);
-                detForm.ShowDialog();
+                var detForm = new DetailForm(taskDetails);
+                detForm.ShowDialog();                
             }
         }
 
         private void btDownload_Click(object sender, EventArgs e)
         {
             DownloadList.Tasks.Add(new TrackDownloadTask(_result as Track));
+        }
+
+        private async Task<List<Track>> GetTaskFindAllTracksArtist(SpotifyServices spot, string artistId)
+        {
+            var tracks = new List<Track>();
+
+            var albuns = await spot.Artist.GetAllAlbumsAsync(artistId);
+
+            foreach (var a in albuns)
+            {
+                var tr = await spot.Album.GetAllTracksAsync(a.Id);
+
+                foreach (var t in tr)
+                {
+                    if (tracks.Any(x => x.Id == t.Id))
+                        continue;
+
+                    tracks.Add(t);
+                }
+            }
+
+            return tracks;
         }
     }
 }

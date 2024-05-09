@@ -161,6 +161,7 @@
             Controls.Add(mainLayout);
             MinimumSize = new Size(816, 571);
             Name = "MainForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "MainForm";
             mainLayout.ResumeLayout(false);
             pnTools.ResumeLayout(false);

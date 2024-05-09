@@ -33,7 +33,7 @@ namespace SDL.SpotifyClient.Services
 
                 tracks.AddRange(temp);
 
-                if (tracks.Count < 4)
+                if (temp.Count < 4)
                     break;
 
                 offset += tracks.Count;
