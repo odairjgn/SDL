@@ -49,5 +49,11 @@ namespace SDL.Forms
                 await item.Download();
             }
         }
+
+        private void btnFromUrl_Click(object sender, EventArgs e)
+        {
+            var form = new AddLinksForms();
+            form.ShowDialog(); 
+        }
     }
 }

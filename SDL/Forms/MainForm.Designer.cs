@@ -114,6 +114,7 @@
             btnFromUrl.TabIndex = 1;
             btnFromUrl.Text = "From URL";
             btnFromUrl.UseVisualStyleBackColor = true;
+            btnFromUrl.Click += btnFromUrl_Click;
             // 
             // btnSearch
             // 

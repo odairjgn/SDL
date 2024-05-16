@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             label1 = new Label();
-            textBox1 = new TextBox();
-            button1 = new Button();
+            txtLinks = new TextBox();
+            btOk = new Button();
             SuspendLayout();
             // 
             // label1
@@ -42,31 +42,32 @@
             label1.TabIndex = 0;
             label1.Text = "Spotify Links: (one per line)";
             // 
-            // textBox1
+            // txtLinks
             // 
-            textBox1.Location = new Point(12, 27);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.ScrollBars = ScrollBars.Both;
-            textBox1.Size = new Size(661, 267);
-            textBox1.TabIndex = 1;
+            txtLinks.Location = new Point(12, 27);
+            txtLinks.Multiline = true;
+            txtLinks.Name = "txtLinks";
+            txtLinks.ScrollBars = ScrollBars.Both;
+            txtLinks.Size = new Size(661, 267);
+            txtLinks.TabIndex = 1;
             // 
-            // button1
+            // btOk
             // 
-            button1.Location = new Point(598, 307);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 2;
-            button1.Text = "OK";
-            button1.UseVisualStyleBackColor = true;
+            btOk.Location = new Point(598, 307);
+            btOk.Name = "btOk";
+            btOk.Size = new Size(75, 23);
+            btOk.TabIndex = 2;
+            btOk.Text = "OK";
+            btOk.UseVisualStyleBackColor = true;
+            btOk.Click += btOk_Click;
             // 
             // AddLinksForms
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(685, 342);
-            Controls.Add(button1);
-            Controls.Add(textBox1);
+            Controls.Add(btOk);
+            Controls.Add(txtLinks);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
@@ -80,7 +81,7 @@
         #endregion
 
         private Label label1;
-        private TextBox textBox1;
-        private Button button1;
+        private TextBox txtLinks;
+        private Button btOk;
     }
 }
