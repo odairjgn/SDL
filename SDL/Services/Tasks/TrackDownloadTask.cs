@@ -55,6 +55,11 @@ namespace SDL.Services.Tasks
 
         public async override Task Download()
         {
+            if (Status == DownloadTaskStatus.Finished)
+            {
+                return;
+            }
+
             try
             {
                 Status = DownloadTaskStatus.Running;

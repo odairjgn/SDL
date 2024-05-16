@@ -24,5 +24,26 @@ namespace SDL.Forms
             var searchForm = new SearchForm();
             searchForm.ShowDialog();
         }
+
+        private void btnClearList_Click(object sender, EventArgs e)
+        {
+            DownloadList.Tasks.Clear();
+            flpItensDownload.Controls.Clear();
+        }
+
+        private async void btnDownload_Click(object sender, EventArgs e)
+        {
+            pnTools.Enabled = btnDownload.Enabled = false;
+            await RunDownloads();
+            pnTools.Enabled = btnDownload.Enabled = true;
+        }
+
+        private async Task RunDownloads()
+        {
+            foreach (var item in DownloadList.Tasks)
+            {
+                await item.Download();
+            }
+        }
     }
 }

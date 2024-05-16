@@ -83,6 +83,7 @@
             btnClearList.TabIndex = 4;
             btnClearList.Text = "Clear list";
             btnClearList.UseVisualStyleBackColor = true;
+            btnClearList.Click += btnClearList_Click;
             // 
             // button1
             // 
@@ -143,6 +144,7 @@
             btnDownload.TabIndex = 0;
             btnDownload.Text = "Download";
             btnDownload.UseVisualStyleBackColor = true;
+            btnDownload.Click += btnDownload_Click;
             // 
             // flpItensDownload
             // 
