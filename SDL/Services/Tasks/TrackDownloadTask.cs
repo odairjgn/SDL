@@ -1,5 +1,6 @@
 ﻿using SDL.Models.Enum;
 using SDL.Services.Ffmpeg;
+using SDL.Services.Log;
 using SDL.Services.Utils;
 using SDL.SpotifyClient.Models.Tracks;
 using SDL.SpotifyClient.Services;
@@ -12,6 +13,10 @@ namespace SDL.Services.Tasks
     {
         private readonly Track _track;
         private readonly FileInfo _file;
+
+        public string TrackId => _track.Id;
+
+        public override string OutputFile => _file.FullName;
 
         public TrackDownloadTask(Track track)
         {
@@ -66,12 +71,13 @@ namespace SDL.Services.Tasks
                 var ok = await FfmpegService.Instance.StreamConvert(streamUrl, _file.FullName);
                 Status = ok ? DownloadTaskStatus.Finished : DownloadTaskStatus.Error;
             }
-            catch
+            catch (Exception ex)
             {
-                if(_file.Exists)
+                if (_file.Exists)
                     _file.Delete();
 
                 Status = DownloadTaskStatus.Error;
+                LogService.Instance.WriteException(ex);
             }
         }
 

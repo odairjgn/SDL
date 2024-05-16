@@ -8,6 +8,8 @@ namespace SDL.Services.Tasks
     {
         public Guid Id { get; set; }
 
+        public abstract string OutputFile { get; }
+
         public event PropertyChangedEventHandler? PropertyChanged;
         public event EventHandler Remove;
 

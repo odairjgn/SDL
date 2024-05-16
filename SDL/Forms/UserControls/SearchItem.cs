@@ -195,7 +195,7 @@ namespace SDL.Forms.UserControls
         {
             if (_result != null)
             {
-                var spot = new SpotifyServices();                
+                var spot = new SpotifyServices();
 
                 Task<List<Track>> taskDetails = Task.FromResult(new List<Track>());
 
@@ -211,18 +211,91 @@ namespace SDL.Forms.UserControls
 
                     case Artist artist:
 
-                        taskDetails = GetTaskFindAllTracksArtist(spot, artist.Id);                        
+                        taskDetails = GetTaskFindAllTracksArtist(spot, artist.Id);
                         break;
                 }
 
                 var detForm = new DetailForm(taskDetails);
-                detForm.ShowDialog();                
+                detForm.ShowDialog();
             }
         }
 
-        private void btDownload_Click(object sender, EventArgs e)
+        private async void btDownload_Click(object sender, EventArgs e)
         {
-            DownloadList.Tasks.Add(new TrackDownloadTask(_result as Track));
+            btDownload.Enabled = false;
+            switch (_result)
+            {
+                case Track track:
+                    AddTrack(track);
+                    break;
+
+                case Playlist list:
+                    await AddPlaylistAsync(list);
+                    break;
+
+                case Album album:
+                    await AddAlbumAsync(album);
+                    break;
+
+                case Artist artist:
+                    await AddArtistAsync(artist);
+                    break;
+            }
+            btDownload.Enabled = true;
+        }
+
+        private async Task AddArtistAsync(Artist artist)
+        {
+            try
+            {
+                var client = new SpotifyServices();
+                var albuns = await client.Artist.GetAllAlbumsAsync(artist.Id);
+                albuns.ForEach(async x => await AddAlbumAsync(x));
+            }
+            catch (Exception ex)
+            {
+                LogService.Instance.WriteException(ex);
+            }
+        }
+
+        private async Task AddAlbumAsync(Album album)
+        {
+            try
+            {
+                var client = new SpotifyServices();
+                var tracks = await client.Album.GetTracksAsync(album.Id);
+                tracks.ForEach(x => AddTrack(x));
+            }
+            catch (Exception ex)
+            {
+                LogService.Instance.WriteException(ex);
+            }
+        }
+
+        private async Task AddPlaylistAsync(Playlist list)
+        {
+            try
+            {
+                var client = new SpotifyServices();
+                var tracks = await client.Playlist.GetTracksAsync(list.Id);
+                tracks.ForEach(x => AddTrack(x, list.Name));
+            }
+            catch (Exception ex)
+            {
+                LogService.Instance.WriteException(ex);
+            }
+        }
+
+        private void AddTrack(Track track, string? playList = null)
+        {
+            var dlTask = playList == null 
+                ? new TrackDownloadTask(track) 
+                : new TrackDownloadTask(track, playList);
+
+            if (DownloadList.Tasks.Any(x => x.OutputFile == dlTask.OutputFile))
+                return;
+
+            DownloadList.Tasks.Add(dlTask);
         }
 
         private async Task<List<Track>> GetTaskFindAllTracksArtist(SpotifyServices spot, string artistId)
