@@ -6,7 +6,7 @@ namespace SDL.Services.Utils
 {
     public class FileNameBuider
     {
-        public DirectoryInfo Root { get; set; } 
+        public DirectoryInfo Root { get; set; }
             = new DirectoryInfo(ConfigurationService.ConfigFile.DownloadFolder);
 
         public Track Track { get; set; }
@@ -15,8 +15,20 @@ namespace SDL.Services.Utils
 
         public string Extension { get; set; } = ".mp3";
 
+        public string Playlist { get; set; }
+
         public FileInfo Buid()
         {
+            if (Playlist != null)
+            {
+                var filepl = Path.Combine(
+                    Root.FullName,
+                    Playlist.ToSafeFilePath(),
+                    $"{Track.Title.ToSafeFilePath()}{Extension}");
+
+                return new FileInfo(filepl);
+            }
+
             var fragment = string.Format(Pattern,
                 Track.Title,
                 Track.Artists.First().Name,

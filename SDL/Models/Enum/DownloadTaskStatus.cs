@@ -3,10 +3,7 @@
     public enum DownloadTaskStatus
     {
         Ready,
-        Waiting,
         Running,
-        Skiped,
-        Failed,
         Finished,
         Error
     }

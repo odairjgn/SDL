@@ -1,4 +1,10 @@
-﻿using SDL.SpotifyClient.Models.Tracks;
+﻿using SDL.Models.Enum;
+using SDL.Services.Ffmpeg;
+using SDL.Services.Utils;
+using SDL.SpotifyClient.Models.Tracks;
+using SDL.SpotifyClient.Services;
+using YoutubeExplode;
+using YoutubeExplode.Videos.Streams;
 
 namespace SDL.Services.Tasks
 {
@@ -21,17 +27,52 @@ namespace SDL.Services.Tasks
 
         private FileInfo GenerateName(string playListName)
         {
-            throw new NotImplementedException();
+            var builder = new FileNameBuider();
+            builder.Track = _track;
+            builder.Playlist = playListName;
+            return builder.Buid();
         }
 
         private FileInfo GenerateName()
         {
-            return new FileInfo("C:/didi.txt");
+            var builder = new FileNameBuider();
+            builder.Track = _track;
+            return builder.Buid();
         }
 
-        public override Task Download()
+        private void SetupDirectory()
         {
-            throw new NotImplementedException();
+            if (!_file.Directory?.Exists == true)
+            {
+                _file.Directory!.Create();
+            }
+        }
+
+        public async override Task Download()
+        {
+            try
+            {
+                Status = DownloadTaskStatus.Running;
+                await FfmpegService.Instance.DownloadFfmpegAsync();
+                FfmpegService.Instance.ConfigureFfmpeg();
+
+                var clientSpotify = new SpotifyServices();
+                var clientYoutube = new YoutubeClient();
+                var youtubeId = await clientSpotify.Track.GetYoutubeIdAsync(_track.Id);
+                var youtubeUrl = $"https://youtube.com/watch?v={youtubeId}";
+                var streamManifest = await clientYoutube.Videos.Streams.GetManifestAsync(youtubeId);
+                var streamUrl = streamManifest.GetAudioOnlyStreams().GetWithHighestBitrate().Url;
+                SetupDirectory();
+                var ok = await FfmpegService.Instance.StreamConvert(streamUrl, _file.FullName);
+                Status = ok ? DownloadTaskStatus.Finished : DownloadTaskStatus.Error;
+            }
+            catch
+            {
+                if(_file.Exists)
+                    _file.Delete();
+
+                Status = DownloadTaskStatus.Error;
+            }
         }
 
         public override string ToString()

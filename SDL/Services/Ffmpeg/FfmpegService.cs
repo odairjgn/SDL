@@ -11,7 +11,9 @@ namespace SDL.Services.Ffmpeg
     public class FfmpegService
     {
         private static FfmpegService _instance;
-        public static FfmpegService Instance => (_instance ??= new FfmpegService());
+        public static FfmpegService Instance => _instance ??= new FfmpegService();
+
+        private bool _configured;
 
         private FfmpegService() { }
 
@@ -25,14 +27,19 @@ namespace SDL.Services.Ffmpeg
 
         public void ConfigureFfmpeg()
         {
+            if(_configured) 
+                return;
+
             GlobalFFOptions.Configure(new FFOptions
             {
                 BinaryFolder = ConfigurationService.ConfigFile.FfmpegFolder + "\\",
                 TemporaryFilesFolder = ConfigurationService.ConfigFile.TempFolder + "\\",
             });
+
+            _configured = true;
         }
 
-        public async Task<bool> DownloadFfmpeg()
+        public async Task<bool> DownloadFfmpegAsync()
         {
             if (new DirectoryInfo(ConfigurationService.ConfigFile.FfmpegFolder).EnumerateFiles()
                     .Count() >= 3)
