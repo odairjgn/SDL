@@ -26,7 +26,7 @@ namespace SDL.Forms.Dialogs
 
         private async Task LoadResources()
         {
-            await FfmpegService.Instance.DownloadFfmpeg();
+            await FfmpegService.Instance.DownloadFfmpegAsync();
         }
     }
 }

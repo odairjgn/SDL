@@ -31,9 +31,9 @@ namespace SDL.Services.Utils
 
             var fragment = string.Format(Pattern,
                 Track.Title,
-                Track.Artists.First().Name,
+                Track.Artists?.FirstOrDefault()?.Name,
                 Track.Album?.Name,
-                Track.Album?.Genres.FirstOrDefault(),
+                Track.Album?.Genres?.FirstOrDefault(),
                 Track.TrackNumber,
                 Track.DiscNumber,
                 Track.Popularity,
