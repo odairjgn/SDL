@@ -1,15 +1,13 @@
-﻿using SDL.SpotifyClient.Models.Tracks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using SDL.Services.Configuration;
+using SDL.SpotifyClient.Models.Tracks;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SDL.Services.Utils
 {
     public class FileNameBuider
     {
-        public DirectoryInfo Root { get; set; } = new DirectoryInfo(Directory.GetCurrentDirectory());
+        public DirectoryInfo Root { get; set; } 
+            = new DirectoryInfo(ConfigurationService.ConfigFile.DownloadFolder);
 
         public Track Track { get; set; }
 
@@ -19,16 +17,24 @@ namespace SDL.Services.Utils
 
         public FileInfo Buid()
         {
-            var fragment = string.Format(Pattern, 
-                Track.Title.ToSafeFilePath(),
-                Track.Artists.First().Name.ToSafeFilePath(),
-                Track.Album?.Name?.ToSafeFilePath());
+            var fragment = string.Format(Pattern,
+                Track.Title,
+                Track.Artists.First().Name,
+                Track.Album?.Name,
+                Track.Album?.Genres.FirstOrDefault(),
+                Track.TrackNumber,
+                Track.DiscNumber,
+                Track.Popularity,
+                DateTime.Now);
+
+            var file = Path.Combine(Root.FullName, $"{fragment.ToSafeFilePath()}{Extension}");
+            return new FileInfo(file);
         }
 
         public static string GetHelpText()
         {
             var sb = new StringBuilder();
-            
+
             //Track.Title
             sb.AppendLine("0: Track name");
 
@@ -45,7 +51,7 @@ namespace SDL.Services.Utils
             sb.AppendLine("4: Track Number");
 
             //Track.DiskNumber
-            sb.AppendLine("5: Track Number");
+            sb.AppendLine("5: Disk Number");
 
             //Track.Popularity
             sb.AppendLine("6: Popularity");
