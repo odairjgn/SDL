@@ -1,4 +1,5 @@
 ﻿using SDL.Forms.Dialogs;
+using SDL.Forms.UserControls;
 using SDL.Services.Tasks;
 
 namespace SDL.Forms
@@ -13,9 +14,12 @@ namespace SDL.Forms
 
         private void Tasks_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
+            if (e.NewItems == null)
+                return;
+
             foreach (DownloadTask item in e.NewItems)
             {
-                flpItensDownload.Controls.Add(new Label() { Text = item.ToString() });
+                flpItensDownload.Controls.Add(new DownloadItem(item));
             }
         }
 

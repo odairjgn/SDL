@@ -57,7 +57,7 @@
             mainLayout.RowCount = 2;
             mainLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             mainLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
-            mainLayout.Size = new Size(800, 532);
+            mainLayout.Size = new Size(878, 532);
             mainLayout.TabIndex = 0;
             // 
             // pnTools
@@ -132,13 +132,13 @@
             pnActions.Dock = DockStyle.Fill;
             pnActions.Location = new Point(143, 495);
             pnActions.Name = "pnActions";
-            pnActions.Size = new Size(654, 34);
+            pnActions.Size = new Size(732, 34);
             pnActions.TabIndex = 2;
             // 
             // btnDownload
             // 
             btnDownload.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btnDownload.Location = new Point(515, 1);
+            btnDownload.Location = new Point(593, 1);
             btnDownload.Name = "btnDownload";
             btnDownload.Size = new Size(136, 30);
             btnDownload.TabIndex = 0;
@@ -152,14 +152,14 @@
             flpItensDownload.Dock = DockStyle.Fill;
             flpItensDownload.Location = new Point(143, 3);
             flpItensDownload.Name = "flpItensDownload";
-            flpItensDownload.Size = new Size(654, 486);
+            flpItensDownload.Size = new Size(732, 486);
             flpItensDownload.TabIndex = 3;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 532);
+            ClientSize = new Size(878, 532);
             Controls.Add(mainLayout);
             MinimumSize = new Size(816, 571);
             Name = "MainForm";
