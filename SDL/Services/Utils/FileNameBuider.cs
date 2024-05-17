@@ -11,7 +11,7 @@ namespace SDL.Services.Utils
 
         public Track Track { get; set; }
 
-        public string Pattern { get; set; } = ConfigurationService.ConfigFile.FileNameTemplate ?? @"{1}\{2}\{0}";
+        public string Pattern { get; set; } = ConfigurationService.ConfigFile.FileNameTemplate;
 
         public string Extension { get; set; } = ".mp3";
 

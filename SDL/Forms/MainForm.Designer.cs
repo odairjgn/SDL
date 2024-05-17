@@ -94,6 +94,7 @@
             button1.TabIndex = 3;
             button1.Text = "About...";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // btnConfig
             // 
@@ -104,6 +105,7 @@
             btnConfig.TabIndex = 2;
             btnConfig.Text = "Configuration";
             btnConfig.UseVisualStyleBackColor = true;
+            btnConfig.Click += btnConfig_Click;
             // 
             // btnFromUrl
             // 

@@ -53,7 +53,18 @@ namespace SDL.Forms
         private void btnFromUrl_Click(object sender, EventArgs e)
         {
             var form = new AddLinksForms();
-            form.ShowDialog(); 
+            form.ShowDialog();
+        }
+
+        private void btnConfig_Click(object sender, EventArgs e)
+        {
+            var form = new ConfigForm();
+            form.ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("To be added...");
         }
     }
 }

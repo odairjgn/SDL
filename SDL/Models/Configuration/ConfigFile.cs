@@ -16,6 +16,6 @@
 
         public bool CreateSongMetadata { get; set; } = true;
 
-        public string FileNameTemplate { get; set; }
+        public string FileNameTemplate { get; set; } = @"{1}\{2}\{0}";
     }
 }
