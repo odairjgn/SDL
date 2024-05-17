@@ -114,6 +114,7 @@ namespace SDL.Services.Tasks
                 file.Tag.Disc = (uint)_track.DiscNumber;
                 file.Tag.Genres = _track.Album?.Genres?.ToArray() ?? Array.Empty<string>();
                 file.Save();
+                await Task.CompletedTask;
             }
             catch (Exception ex)
             {
