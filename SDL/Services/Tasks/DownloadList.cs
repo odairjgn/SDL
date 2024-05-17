@@ -37,7 +37,7 @@ namespace SDL.Services.Tasks
             {
                 var client = new SpotifyServices();
                 var tracks = await client.Album.GetTracksAsync(album.Id);
-                tracks.ForEach(x => AddTrackAsync(x));
+                tracks.ForEach(async x => await AddTrackAsync(x));
             }
             catch (Exception ex)
             {
@@ -51,7 +51,7 @@ namespace SDL.Services.Tasks
             {
                 var client = new SpotifyServices();
                 var tracks = await client.Playlist.GetTracksAsync(list.Id);
-                tracks.ForEach(x => AddTrackAsync(x, list.Name));
+                tracks.ForEach(async x => await AddTrackAsync(x, list.Name));
             }
             catch (Exception ex)
             {
