@@ -112,7 +112,7 @@ namespace SDL.Services.Tasks
                 file.Tag.Track = (uint)_track.TrackNumber;
                 file.Tag.DateTagged = DateTime.UtcNow;
                 file.Tag.Disc = (uint)_track.DiscNumber;
-                file.Tag.Genres = _track.Album?.Genres?.ToArray() ?? Array.Empty<string>();
+                file.Tag.Genres = _track.Album?.Genres?.ToArray() ?? [];
                 file.Save();
                 await Task.CompletedTask;
             }
