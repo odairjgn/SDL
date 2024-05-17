@@ -167,7 +167,7 @@
             MinimumSize = new Size(816, 571);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "MainForm";
+            Text = "SDL";
             mainLayout.ResumeLayout(false);
             pnTools.ResumeLayout(false);
             pnActions.ResumeLayout(false);

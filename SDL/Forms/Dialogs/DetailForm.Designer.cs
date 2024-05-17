@@ -49,7 +49,7 @@
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "DetailForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "DetailForm";
+            Text = "Details";
             ResumeLayout(false);
         }
 
