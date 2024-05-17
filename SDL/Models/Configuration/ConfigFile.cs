@@ -16,8 +16,6 @@
 
         public bool CreateSongMetadata { get; set; } = true;
 
-        public string FolderNameTemplate { get; set; }
-
         public string FileNameTemplate { get; set; }
 
         public int Threads { get; set; } = 3;
