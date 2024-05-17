@@ -1,4 +1,5 @@
-﻿using SDL.Services.Log;
+﻿using SDL.Services.Configuration;
+using SDL.Services.Log;
 using SDL.SpotifyClient.Models.Album;
 using SDL.SpotifyClient.Models.Artist;
 using SDL.SpotifyClient.Models.Playlist;
@@ -49,9 +50,10 @@ namespace SDL.Services.Tasks
         {
             try
             {
+                var saveOwnFolder = ConfigurationService.ConfigFile.SavePlaylistOnOwnFolder;
                 var client = new SpotifyServices();
                 var tracks = await client.Playlist.GetTracksAsync(list.Id);
-                tracks.ForEach(async x => await AddTrackAsync(x, list.Name));
+                tracks.ForEach(async x => await AddTrackAsync(x, saveOwnFolder ? list.Name : null));
             }
             catch (Exception ex)
             {
