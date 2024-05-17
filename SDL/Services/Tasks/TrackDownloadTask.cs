@@ -105,7 +105,6 @@ namespace SDL.Services.Tasks
                 if (!ConfigurationService.ConfigFile.CreateSongMetadata)
                     return;
 
-
                 var file = TagLib.File.Create(_file.FullName);
                 file.Tag.Title = _track.Title;
                 file.Tag.Performers = _track.Artists.Select(x => x.Name).ToArray();
