@@ -56,10 +56,10 @@
             linkLabel1.AutoSize = true;
             linkLabel1.Location = new Point(12, 468);
             linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new Size(159, 15);
+            linkLabel1.Size = new Size(161, 15);
             linkLabel1.TabIndex = 2;
             linkLabel1.TabStop = true;
-            linkLabel1.Text = "help about filename patterns";
+            linkLabel1.Text = "Help about filename patterns";
             linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
             // ConfigForm
