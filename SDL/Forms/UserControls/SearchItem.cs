@@ -226,7 +226,7 @@ namespace SDL.Forms.UserControls
             switch (_result)
             {
                 case Track track:
-                    await DownloadList.AddTrack(track);
+                    await DownloadList.AddTrackAsync(track);
                     break;
 
                 case Playlist list:

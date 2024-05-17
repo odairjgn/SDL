@@ -37,7 +37,7 @@ namespace SDL.Services.Tasks
             {
                 var client = new SpotifyServices();
                 var tracks = await client.Album.GetTracksAsync(album.Id);
-                tracks.ForEach(x => AddTrack(x));
+                tracks.ForEach(x => AddTrackAsync(x));
             }
             catch (Exception ex)
             {
@@ -51,7 +51,7 @@ namespace SDL.Services.Tasks
             {
                 var client = new SpotifyServices();
                 var tracks = await client.Playlist.GetTracksAsync(list.Id);
-                tracks.ForEach(x => AddTrack(x, list.Name));
+                tracks.ForEach(x => AddTrackAsync(x, list.Name));
             }
             catch (Exception ex)
             {
@@ -59,7 +59,7 @@ namespace SDL.Services.Tasks
             }
         }
 
-        public static async Task AddTrack(Track track, string? playList = null)
+        public static async Task AddTrackAsync(Track track, string? playList = null)
         {
             var dlTask = playList == null
                 ? new TrackDownloadTask(track)
@@ -70,6 +70,62 @@ namespace SDL.Services.Tasks
 
             Tasks.Add(dlTask);
             await Task.CompletedTask;
+        }
+
+        public static async Task AddIdAsync(TrackId trackId)
+        {
+            try
+            {
+                var client = new SpotifyServices();
+                var track = await client.Track.GetAsync(trackId);
+                await AddTrackAsync(track);
+            }
+            catch (Exception ex)
+            {
+                LogService.Instance.WriteException(ex);
+            }
+        }
+
+        public static async Task AddIdAsync(PlaylistId playListId)
+        {
+            try
+            {
+                var client = new SpotifyServices();
+                var playlist = await client.Playlist.GetAsync(playListId);
+                await AddPlaylistAsync(playlist);
+            }
+            catch (Exception ex)
+            {
+                LogService.Instance.WriteException(ex);
+            }
+        }
+
+        public static async Task AddIdAsync(AlbumId albumId)
+        {
+            try
+            {
+                var client = new SpotifyServices();
+                var album = await client.Album.GetAsync(albumId);
+                await AddAlbumAsync(album);
+            }
+            catch (Exception ex)
+            {
+                LogService.Instance.WriteException(ex);
+            }
+        }
+
+        public static async Task AddIdAsync(ArtistId artistId)
+        {
+            try
+            {
+                var client = new SpotifyServices();
+                var artist = await client.Artist.GetAsync(artistId);
+                await AddArtistAsync(artist);
+            }
+            catch (Exception ex)
+            {
+                LogService.Instance.WriteException(ex);
+            }
         }
     }
 }
